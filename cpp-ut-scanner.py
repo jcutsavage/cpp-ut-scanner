@@ -54,8 +54,36 @@ def main(argv):
         print("File not found!")
         sys.exit(1)
     
-    for f in files:
-        print(f)
+    chooseFileToScan(files)    
+        
+        
+def chooseFileToScan(filelist):
+    
+    print('Please select the file you would like to scan:')
+    
+    count = 1
+    
+    fileselector = {}
+    
+    for f in filelist:
+        filedic = {str(count): f}
+        fileselector.update(filedic)
+        print(str(count) + ')', f)
+        
+    usrselection = input()
+    
+    validselection = False
+    
+    while(validselection == False):
+        if usrselection in fileselector :
+          print('You have selected:', fileselector.get(usrselection))
+          affirmation = input('Is this correct? [y/n]')
+          if(affirmation.lower() == "y"):
+              validselection = True
+          else:
+              usrselection = input('Please make another selection: ')
+        else:
+            usrselection = input('Please select a valid number: ')
     
     
 if __name__ == "__main__":
