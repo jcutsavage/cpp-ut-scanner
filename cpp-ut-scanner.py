@@ -50,6 +50,10 @@ def main(argv):
     
     files = glob.glob(findstr.rstrip(), recursive=True)
     
+    if all(False for _ in files):
+        print("File not found!")
+        sys.exit(1)
+    
     for f in files:
         print(f)
     
