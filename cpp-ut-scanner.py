@@ -6,8 +6,7 @@ import subprocess
 import glob
 from os import path
 
-repo_path = ''
-scan_file = ''
+global repo_path
 
 def main(argv):
     inputfile = ''
@@ -56,12 +55,10 @@ def main(argv):
         print("File not found!")
         sys.exit(1)
     
-    chooseFileToScan(files)
-    
-    file_split = path.splitext(scan_file)
-    
-    file_extension = file_split[1]
-    
+    scan_file = chooseFileToScan(files)
+        
+    file_name, file_extension = path.splitext(scan_file)
+            
     if(file_extension != ".cpp" and file_extension != ".h"):
         print('Chosen path is not a C++ file')
         sys.exit(1)
@@ -95,7 +92,7 @@ def chooseFileToScan(filelist):
         else:
             usrselection = input('Please select a valid number: ')
             
-    scan_file = fileselector.get(usrselection)
+    return fileselector.get(usrselection)
     
     
 if __name__ == "__main__":
