@@ -4,8 +4,10 @@
 import sys, getopt
 import subprocess
 import glob
+from os import path
 
-global repo_path
+repo_path = ''
+scan_file = ''
 
 def main(argv):
     inputfile = ''
@@ -54,7 +56,15 @@ def main(argv):
         print("File not found!")
         sys.exit(1)
     
-    chooseFileToScan(files)    
+    chooseFileToScan(files)
+    
+    file_split = path.splitext(scan_file)
+    
+    file_extension = file_split[1]
+    
+    if(file_extension != ".cpp" and file_extension != ".h"):
+        print('Chosen path is not a C++ file')
+        sys.exit(1)
         
         
 def chooseFileToScan(filelist):
@@ -66,24 +76,26 @@ def chooseFileToScan(filelist):
     fileselector = {}
     
     for f in filelist:
-        filedic = {str(count): f}
-        fileselector.update(filedic)
+        filedict = {str(count): f}
+        fileselector.update(filedict)
         print(str(count) + ')', f)
         
-    usrselection = input()
+    usrselection = input('Enter a number from the list: ')
     
     validselection = False
     
     while(validselection == False):
         if usrselection in fileselector :
           print('You have selected:', fileselector.get(usrselection))
-          affirmation = input('Is this correct? [y/n]')
-          if(affirmation.lower() == "y"):
+          affirmation = input('Is this correct? [y/n]: ')
+          if(affirmation.lower() == "y" or affirmation == ''):
               validselection = True
           else:
               usrselection = input('Please make another selection: ')
         else:
             usrselection = input('Please select a valid number: ')
+            
+    scan_file = fileselector.get(usrselection)
     
     
 if __name__ == "__main__":
